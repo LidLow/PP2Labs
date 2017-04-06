@@ -17,6 +17,9 @@ FPS = 5
 
 screen = pygame.display.set_mode((HEIGHT, WIDTH))
 
+#One cell is 30x30 pixels
+#The grid is 30x30 cells
+
 CELL = 30
 
 def draw_grid():
@@ -42,7 +45,7 @@ class Point:
 class Snake:
     def __init__(self):
         self.body = [Point(15, 15), Point(14, 15)]
-        self.dx = 1
+        self.dx = 0
         self.dy = 0
         self.lvl = 0
         self.points = 0
@@ -118,7 +121,6 @@ while running:
     snake.move()
     snake.checkFoodCollision(food)
     snake.checkWallCollision()
-
 
     snake.draw()
     food.draw()

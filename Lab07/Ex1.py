@@ -14,7 +14,7 @@ backGnd = zxc.image.load("clock.png")
 
 angleM = 0
 minArrow = zxc.image.load("min_hand.png")
-minArrowRect = minArrow.get_rect()
+minArrowRect = minArrow.get_rect(center=(400,300))
 
 angleS = 0
 secArrow = zxc.image.load("sec_hand.png")
@@ -36,8 +36,8 @@ while not done:
     screen.blit(rotateMinArrow, rotateMinArrowRect.topleft)
     
     curTime = datetime.datetime.now() # current time
-    angleM = curTime.minute * -7.5
-    angleS = curTime.second * -6
+    angleM = curTime.minute * -1 + 90
+    angleS = curTime.second
 
     zxc.display.flip()
 

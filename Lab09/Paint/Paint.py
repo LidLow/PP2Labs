@@ -57,7 +57,7 @@ def main():
                     POSITIONS.clear()           
                     RGB = (255, 255, 255)   
                 if event.key == zxc.K_r:                    #change color
-                    colorTuple = next(colorOBJ)
+                    colorTuple = next(colorOBJ)             #get tuple
                     RGB = colorTuple[1]
                     COLORNAME = colorTuple[0]
 
@@ -65,7 +65,7 @@ def main():
             if pressed[zxc.K_a]:                                 #figure drawing works when a is pressed
                 GEOFIGACTIVE = True
 
-                if event.type == zxc.MOUSEWHEEL:                        #figure choose mode
+                if event.type == zxc.KEYDOWN and event.key == zxc.K_o:                        #figure choose mode
                     FIGURE = next(figureOBJ)
                 if event.type == zxc.MOUSEBUTTONDOWN and event.button in [1, 3]:      #figuer draw mode
                     CLICKS += 1
