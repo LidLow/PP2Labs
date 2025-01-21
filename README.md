@@ -1,3 +1,3 @@
-PP2_2025\n
-Lector: Ussyukin N.A.
-Practice: Abeshov A.E
+PP2_2025
+<p>Lector: Ussyukin N.A.</p>
+<p>Practice: Abeshov A.E</p>
