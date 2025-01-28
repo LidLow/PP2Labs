@@ -1,0 +1,4 @@
+# Print the following pattern
+
+
+
