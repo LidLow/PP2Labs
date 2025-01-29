@@ -31,9 +31,21 @@ def filter_prime(list):
     return list
 
 
-#5       
+#5      
 def stringPermutation(string):
-    
+    import math
+    import random
+
+    answerList = set()
+    charList = list(string)
+    numComb = math.factorial(len(string))
+
+    while numComb != len(answerList):
+        random.shuffle(charList)
+        tempString = "".join(charList)
+        answerList.add(tempString)
+
+    return answerList
 
 
 #6
@@ -59,9 +71,9 @@ def spy_game(list):
 
 
 #9
-from math import pi
-
 def sphereVolume(radius):
+    from math import pi
+
     return 4/3 * pi * radius**3
 
 
