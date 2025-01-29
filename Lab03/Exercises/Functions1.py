@@ -33,7 +33,7 @@ def filter_prime(list):
 
 #5       
 def stringPermutation(string):
-    pass
+    
 
 
 #6
