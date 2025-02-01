@@ -1,5 +1,4 @@
-# Dictionary of movies
-
+# List of movies
 movies = [
 {
 "name": "Usual Suspects", 
@@ -79,26 +78,26 @@ movies = [
 ]
 
 
-#1 
+#1. Write a function that takes a single movie and returns True if its IMDB score is above 5.5
 def ratingFilter(movie):
     return movie["imdb"] >= 5.5
 
 
-#2
+#2. Write a function that returns a sublist of movies with an IMDB score above 5.5.
 def ratingFilter2(movies):
-    list = [x for x in movies if x["imdb"] >= 5.5]
+    list = [x["name"] for x in movies if x["imdb"] >= 5.5]
 
     return list
 
 
-#3
+#3. Write a function that takes a category name and returns just those movies under that category.
 def categoryFilter(category, movies):
     list = [x["name"] for x in movies if x["category"].lower() == category.lower()]
     
     return list
         
 
-#4
+#4. Write a function that takes a list of movies and computes the average IMDB score.
 def averageRating(movies):
     averageRating = 0
 
@@ -107,7 +106,7 @@ def averageRating(movies):
     
     return round(averageRating / len(movies), 2)
 
-#5
+#5. Write a function that takes a category and computes the average IMDB score.
 def averageRating(category, movies):
     averageRating = 0
     counter = 0

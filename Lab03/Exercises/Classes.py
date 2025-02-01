@@ -1,4 +1,4 @@
-#1
+#1. Define a class which has at least two methods: getString - to get a string from console input printString - to print the string in upper case.
 class MyString:
     def setString(self): #setter
         self.string = input("Input: ")
@@ -6,12 +6,9 @@ class MyString:
     def getString(self): #getter
         print(self.string.upper())
 
-"""user = MyString()
-user.setString()
-user.getString()"""
 
-
-#2
+#2. Define a class named Shape and its subclass Square. The Square class has an init function which takes a length as argument. 
+#   Both classes have a area function which can print the area of the shape where Shape's area is 0 by default.
 class Shape:
     def __init__(self, length):
         self.length = length
@@ -32,7 +29,33 @@ class Square(Shape):
         return self.area
     
 
-#4
+#3. Define a class named Rectangle which inherits from Shape class from task 2. 
+#   Class instance can be constructed by a length and width. The Rectangle class has a method which can compute the area.
+class Shape:
+    def __init__(self, length):
+        self.length = length
+        self.area = 0
+
+    def getArea(self):
+        return self.area
+
+class Rectangle(Shape):
+    def __init__(self, length, width):
+        super().__init__(length)
+        self.width = width
+        self.area = Shape.getArea(self.length)
+
+    def setArea(self):
+        self.area = self.length  * self.width
+
+    def getAreaSquare(self):
+        return self.area
+
+
+#4. Write the definition of a Point class. Objects from this class should have a
+#      1) a method show to display the coordinates of the point
+#      2) a method move to change these coordinates
+#      3) a method dist that computes the distance between 2 points
 import math
 
 class Point():
@@ -51,7 +74,8 @@ class Point():
         return round(math.sqrt((xSecAxis - self.xAxis)**2 + (ySecAxis - self.yAxis)**2), 2)
     
 
-#5
+#5. Create a bank account class that has attributes owner, balance and two methods deposit and withdraw. 
+#   Withdrawals may not exceed the available balance. Instantiate your class, make several deposits and withdrawals, and test to make sure the account can't be overdrawn.
 class BankAccount():
     def __init__(self): #default
         self.owner = "N/A"
@@ -67,12 +91,12 @@ class BankAccount():
     def withdraw(self, amountOfWithdrawal): #--money from balance
         if self.balance >= amountOfWithdrawal:
             self.balance -= amountOfWithdrawal
-            return True
+            return "Success."
         
-        return False
+        return "Not enough funds."
     
 
-#6
+#6. Write a program which can filter prime numbers in a list by using filter function. Note: Use lambda to define anonymous functions.
 def filter_prime(n):
     counter = 0
 
