@@ -109,10 +109,10 @@ def filter_prime(n):
 
     return True
 
-list = [2, 3, 5, 9, 11]
+"""list = [2, 3, 5, 9, 11]
 
 isPrime = lambda n: filter_prime(n)
 answerList = filter(filter_prime, list)
 
 for x in answerList:
-    print(x)
+    print(x)"""

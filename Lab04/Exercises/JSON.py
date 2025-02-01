@@ -9,7 +9,6 @@ jsonSample = json.loads(initialFile.read())
 connectionIDList = set()
 
 
-
 #getting the id's from the sample
 def listOfConnections():
     print("", "Available Connections:", sep="\n")
