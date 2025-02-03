@@ -75,6 +75,7 @@ def mainMenu():
     elif option == "4":
         dropConnections()
     elif option == "5":
+        initialFile.close()
         exit()
     else:
         mainMenu()
