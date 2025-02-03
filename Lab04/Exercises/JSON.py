@@ -6,7 +6,7 @@ os.chdir(r"C:\Users\margo\OneDrive\Рабочий стол\PP2Labs\Lab04\Exercis
 initialFile = open("sample.json", "r")
 jsonSample = json.loads(initialFile.read())
 
-connectionIDList = set()
+connectionIDList = set() #set with id's
 
 
 #getting the id's from the sample
@@ -28,7 +28,7 @@ def addConnection():
 
     for dict in jsonSample["imdata"]:                                           #loop through list "imdata"
         for key in dict["l1PhysIf"]["attributes"]:                              #loop through dictionary -> "l1PhysIf" -> "attributes"
-            if key == "id" and ID in dict["l1PhysIf"]["attributes"][key]:       #searches for the key "id" and if ["id"] == ID, then adds it to the list
+            if key == "id" and "eth1/" + ID == dict["l1PhysIf"]["attributes"][key]:       #searches for the key "id" and if ["id"] == ID, then adds it to the list
                 connectionIDList.add(dict["l1PhysIf"]["attributes"][key])
                 print("Connected succesfully")
                 return mainMenu()

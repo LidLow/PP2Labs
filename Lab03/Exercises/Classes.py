@@ -20,14 +20,11 @@ class Shape:
 class Square(Shape):
     def __init__(self, length):
         super().__init__(length)
-        self.area = Shape.getArea(self.length)
+        self.area = Shape.getArea(self)
 
     def setArea(self):
-        self.area = self.length  * self.length
+        self.area = self.length**2
 
-    def getAreaSquare(self):
-        return self.area
-    
 
 #3. Define a class named Rectangle which inherits from Shape class from task 2. 
 #   Class instance can be constructed by a length and width. The Rectangle class has a method which can compute the area.
@@ -43,13 +40,10 @@ class Rectangle(Shape):
     def __init__(self, length, width):
         super().__init__(length)
         self.width = width
-        self.area = Shape.getArea(self.length)
+        self.area = Shape.getArea(self)
 
     def setArea(self):
         self.area = self.length  * self.width
-
-    def getAreaSquare(self):
-        return self.area
 
 
 #4. Write the definition of a Point class. Objects from this class should have a
@@ -70,7 +64,7 @@ class Point():
     def show(self): #getter
         print(f"X: {self.xAxis}, Y: {self.yAxis}")
 
-    def dist(self, xSecAxis, ySecAxis):
+    def dist(self, xSecAxis, ySecAxis): #distance between (x1;y1) and (x2;y2)
         return round(math.sqrt((xSecAxis - self.xAxis)**2 + (ySecAxis - self.yAxis)**2), 2)
     
 
@@ -103,16 +97,15 @@ def filter_prime(n):
     for i in range(1, n + 1):
         if n % i == 0:
             counter += 1
-
         if counter > 2: 
             return False
 
     return True
 
-"""list = [2, 3, 5, 9, 11]
+list = [2, 3, 5, 9, 11, 13, 15, 16]
 
 isPrime = lambda n: filter_prime(n)
-answerList = filter(filter_prime, list)
+answerList = filter(isPrime, list)
 
 for x in answerList:
-    print(x)"""
+    print(x)
