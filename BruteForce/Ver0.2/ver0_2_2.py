@@ -1,4 +1,4 @@
-import multiprocessing
+from multiprocessing import *
 import time
 import math
 import random
@@ -17,26 +17,15 @@ if __name__ == "__main__":
     
     string = input("Input: ")
     
-    manager = multiprocessing.Manager()
+    manager = Manager()
     answerList = manager.dict() 
-    
-    p1 = multiprocessing.Process(target=stringPermutation, args=(string, answerList))
-    p2 = multiprocessing.Process(target=stringPermutation, args=(string, answerList))
-    p3 = multiprocessing.Process(target=stringPermutation, args=(string, answerList))
-    p4 = multiprocessing.Process(target=stringPermutation, args=(string, answerList))
-    p5 = multiprocessing.Process(target=stringPermutation, args=(string, answerList))
 
-    p1.start()
-    p2.start()
-    p3.start()
-    p4.start()
-    p5.start()
+    with Process(5) as p:
+        p = Process(target=stringPermutation, args=(string, answerList))
+        p.start()
 
-    p1.join()
-    p2.join()
-    p3.join()
-    p4.join()
-    p5.join()
+    for p in range (5):
+        p.join()
 
     setList = set(answerList)
     
@@ -49,11 +38,11 @@ if __name__ == "__main__":
 
 #Some statistics: 
 #   Uppercase letters, without duplicates, 5 cores:
-#       1!      ->  1.79 sec
-#       2!      ->  2.51 sec
-#       3!      ->  3.48 sec
-#       4!      ->  4.28 sec
-#       5!      ->  9.11 sec
+#       1!      ->  
+#       2!      ->  
+#       3!      ->  
+#       4!      ->  
+#       5!      ->  
 #       6!      ->  
 #       7!      ->  
 #       8!      ->  
