@@ -3,7 +3,7 @@ import datetime
 #1. Write a Python program to subtract five days from current date.
 def fiveDaysAgo():
     today = datetime.date.today()
-    fiveDays= datetime.timedelta(days=5) #found the object in docs
+    fiveDays = datetime.timedelta(days=5) #found the object in docs
 
     print("Output:", today - fiveDays)
 
@@ -26,11 +26,10 @@ def dropMicroseconds():
 
 #4. Write a Python program to calculate two date difference in seconds.
 def differenceInSeconds():
-    someDay = datetime.datetime(2019, 8, 30)
-    today = datetime.datetime.today()
-    answer = today - someDay
+    someDay = datetime.date(int(input("Year: ")), int(input("Month: ")), int(input("Day: ")))
+    today = datetime.date.today()
 
-    print("Difference in seconds:", answer.days * 86400)
+    print("Difference in seconds:", abs(today - someDay).total_seconds()) 
 
 
 #Testing
