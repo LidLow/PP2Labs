@@ -2,9 +2,8 @@ from multiprocessing import *
 import os
 
 def testFunc():
-    print('module name:', __name__)
-    print('parent process:', os.getppid())
-    print('process id:', os.getpid())
+    for i in range(0, 100):
+        print(i)
 
 
 
