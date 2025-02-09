@@ -14,8 +14,9 @@ def evenGenerator(num):
 num = int(input("Input: "))
 
 obj = evenGenerator(num)
-print(next(obj))
-print(next(obj))
+
+for i in obj:
+    print(i, end=", ")
 """
 
 
@@ -47,7 +48,9 @@ def upToDownGenerator(num):
 
 #Testing section
 
-obj = upToDownGenerator(6)
+num = int(input("Input: "))
 
-for x in obj:
-    print(x)
+obj = evenGenerator(num)
+
+for i in obj:
+    print(i, end=", ")
