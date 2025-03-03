@@ -1,9 +1,17 @@
-#1. Write a Python program to list only directories, files and all directories, files in a specified path.
+import os
+from pathlib import *
 
+
+#1. Write a Python program to list only directories, files and all directories, files in a specified path.
+def func_1(directory):
+    return os.listdir(directory)
 
 
 #2. Write a Python program to check for access to a specified path. Test the existence, readability, writability and executability of the specified path
-
+def func_2(directory):
+    if Path.is_file(directory):
+        Path.open(directory)
+        Path.dir
 
 
 #3. Write a Python program to test whether a given path exists or not. If the path exist find the filename and directory portion of the given path.
@@ -31,3 +39,4 @@
 
 
 #Testing section
+print(func_2(r"C:\Users\margo\OneDrive\Рабочий стол\PP2Labs\Lab01"))
