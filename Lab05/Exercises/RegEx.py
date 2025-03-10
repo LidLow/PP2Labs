@@ -49,12 +49,12 @@ def splitAtUpper(string):
 
 #9. Write a Python program to insert spaces between words starting with capital letters.
 def spaceBetweenThem(string):
-    return re.sub(r"([A-Z][a-z]+) ([A-Z][a-z]+)", r"\1   \2", string)
+    return re.sub("([A-Z][a-z]+) ([A-Z][a-z]+)", r"\1   \2", string)
 
 
 #10. Write a Python program to convert a given camel case string to snake case.
 def camelToSnake(s):
-    return re.sub(r'([a-z])([A-Z])', r'\1_\2', s).lower()
+    return re.sub('([a-z])([A-Z])', r'\1_\2', s).lower()
 
 
 #Testing section
