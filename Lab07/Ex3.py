@@ -7,7 +7,7 @@ X = 500 // 2
 Y = 500 // 2
 done = False
 
-Clock = pygame.time.Clock()
+FPS = pygame.time.Clock()
 
 while not done:
     for event in pygame.event.get():
@@ -24,6 +24,6 @@ while not done:
     pygame.draw.circle(screen, (255, 0, 0), (X, Y), 25)
 
     pygame.display.flip()
-    Clock.tick(60)
+    FPS.tick(60)
     
 pygame.quit()

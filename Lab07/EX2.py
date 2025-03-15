@@ -19,7 +19,7 @@ def PreviousSong():
 
 pygame.init()
 
-screen = pygame.display.set_mode((640, 640))
+screen = pygame.display.set_mode((948, 672))
 image = pygame.image.load(r"Pictures\image.png")
 done = False 
 
