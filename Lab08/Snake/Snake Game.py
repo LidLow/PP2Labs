@@ -2,13 +2,13 @@ import pygame, random
 
 pygame.init()
 
-colorWHITE = (255, 255, 255)
-colorGRAY = (200, 200, 200)
-colorBLACK = (0, 0, 0)
-colorRED = (255, 0, 0)
-colorGREEN = (0, 255, 0)
-colorBLUE = (0, 0, 255)
-colorYELLOW = (255, 255, 0)
+WHITE = (255, 255, 255)
+GRAY = (200, 200, 200)
+BLACK = (0, 0, 0)
+RED = (255, 0, 0)
+GREEN = (0, 255, 0)
+BLUE = (0, 0, 255)
+YELLOW = (255, 255, 0)
 
 WIDTH = 900
 HEIGHT = 900
@@ -22,10 +22,10 @@ CELL = 30
 def draw_grid():
     for i in range(HEIGHT // 2):
         for j in range(WIDTH // 2):
-            pygame.draw.rect(screen, colorGRAY, (i * CELL, j * CELL, CELL, CELL), 1)
+            pygame.draw.rect(screen, GRAY, (i * CELL, j * CELL, CELL, CELL), 1)
 
 def draw_grid_chess():
-    colors = [colorWHITE, colorGRAY]
+    colors = [WHITE, GRAY]
 
     for i in range(HEIGHT // 2):
         for j in range(WIDTH // 2):
@@ -57,9 +57,9 @@ class Snake:
 
     def draw(self):
         head = self.body[0]
-        pygame.draw.rect(screen, colorRED, (head.x * CELL, head.y * CELL, CELL, CELL))
+        pygame.draw.rect(screen, RED, (head.x * CELL, head.y * CELL, CELL, CELL))
         for segment in self.body[1:]:
-            pygame.draw.rect(screen, colorYELLOW, (segment.x * CELL, segment.y * CELL, CELL, CELL))
+            pygame.draw.rect(screen, YELLOW, (segment.x * CELL, segment.y * CELL, CELL, CELL))
 
     def checkFoodCollision(self, food):
         head = self.body[0]
@@ -87,7 +87,7 @@ class Food:
         self.pos = Point(random.randint(0, 29), random.randint(0, 29))
 
     def draw(self):
-        pygame.draw.rect(screen, colorGREEN, (self.pos.x * CELL, self.pos.y * CELL, CELL, CELL))
+        pygame.draw.rect(screen, GREEN, (self.pos.x * CELL, self.pos.y * CELL, CELL, CELL))
     
 clock = pygame.time.Clock()
 
@@ -123,7 +123,7 @@ while running:
     snake.draw()
     food.draw()
 
-    pygame.display.set_caption(f"Level: {snake.lvl} | Points: {snake.points + snake.lvl }") #displaying the socer and level
+    pygame.display.set_caption(f"Level: {snake.lvl} | Points: {snake.points + snake.lvl }") #displaying the points and level
 
     pygame.display.flip()
     clock.tick(FPS)
