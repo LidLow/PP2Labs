@@ -1,44 +1,71 @@
 import pygame as zxc
-
 import os
-os.chdir(r"C:\Users\margo\OneDrive\Рабочий стол\PP2Labs\Lab08\RacerRin")
+import sys
+import random
 
-_songs = ["Songs\Best of Luck.mp3", "Songs\Dark Horse.mp3", "Songs\Adrenaline.mp3", "Songs\HIT ME UP.mp3", "Songs\Murder In My Mind.mp3", "Songs\\Upload Download.mp3"]
-
-def NextSong():
-    temp = _songs[0]
-    _songs.pop(0)
-    _songs.append(temp)
+os.chdir(r"C:\Users\margo\OneDrive\Рабочий стол\PP2Labs\Lab08\RacerRin\Images")
 
 zxc.init()
 
-SONG_END = zxc.USEREVENT + 1
-zxc.mixer.music.set_endevent(SONG_END)
-zxc.mixer.music.load(rf"{_songs[0]}")
-zxc.mixer.music.play()
-
-moto = zxc.image.load(r"Images\Motorcycle.png")
-
-screen = zxc.display.set_mode((720, 720))
+screen = zxc.display.set_mode((400, 400))
 FPS = zxc.time.Clock()
+done = False
 
-isPressed = False
-isRotated = 
+class Enemy(zxc.sprite.Sprite):
+    def __init__(self):
+        super().__init__() 
+        self.image = zxc.transform.rotate(zxc.image.load("Motorcycle.png"), -90)
+        self.rect = self.image.get_rect()
+        self.rect.center=(random.randint(40,360),0) 
+ 
+    def move(self):
+        self.rect.move_ip(0,10)
+        if (self.rect.bottom > 400):
+            self.rect.top = 0
+            self.rect.center = (random.randint(30, 370), 0)
+ 
+    def draw(self, surface):
+        surface.blit(self.image, self.rect) 
 
-while True:
-    for event in  zxc.event.get():
+class Player(zxc.sprite.Sprite):
+    def __init__(self):
+        super().__init__() 
+        self.image = zxc.transform.rotate(zxc.image.load("Motorcycle.png"), -90)
+        self.rect = self.image.get_rect()
+        self.rect.center = (160, 320)
+ 
+    def update(self):
+        pressed_keys = zxc.key.get_pressed()
+       #if pressed_keys[K_UP]:
+            #self.rect.move_ip(0, -5)
+       #if pressed_keys[K_DOWN]:
+            #self.rect.move_ip(0,5)
+         
+        if self.rect.left > 0:
+              if pressed_keys[zxc.K_LEFT]:
+                  self.rect.move_ip(-5, 0)
+        if self.rect.right < 400:        
+              if pressed_keys[zxc.K_RIGHT]:
+                  self.rect.move_ip(5, 0)
+ 
+    def draw(self, surface):
+        surface.blit(self.image, self.rect)  
+
+
+P1 = Player()
+E1 = Enemy()
+ 
+while True:     
+    for event in zxc.event.get():              
         if event.type == zxc.QUIT:
             zxc.quit()
-        if event.type == SONG_END:
-            NextSong()
-            zxc.mixer.music.load(rf"{_songs[0]}")
-            zxc.mixer.music.play()
-
-        if event.type == zxc.KEYDOWN and event.key == zxc.K_w:
-            moto = zxc.transform.rotate(moto, 90)
-
+            sys.exit()
+    P1.update()
+    E1.move()
+     
     screen.fill((255, 255, 255))
-    screen.blit(moto, (20, 20))
-
-    zxc.display.flip()
+    P1.draw(screen)
+    E1.draw(screen)
+         
+    zxc.display.update()
     FPS.tick(60)
