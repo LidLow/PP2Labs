@@ -79,6 +79,9 @@ def main():
                         POSITIONS.clear()
             else:
                 GEOFIGACTIVE = False
+                CLICKS = 0
+                POS.clear()
+                POSITIONS.clear()
 
             if zxc.mouse.get_pressed()[0]:                  #draw while pressing lef button
                 position = zxc.mouse.get_pos()
@@ -103,15 +106,15 @@ def paletteSC(PALETTE):
         for key, value in PALETTE.items():
             yield (key, value) 
 
-def figureMode(figures):
+def figureMode(FIGURES):
     while True:
-        for figure in figures:
+        for figure in FIGURES:
             yield figure
 
 def drawFigure(SCREEN, RGB, FIGURE, POS):
     if FIGURE == "Circle":
-        TEMP_RADIUS = round(((POS[0][0] - POS[1][0])**2 + (POS[0][1] - POS[1][1])**2)**0.5)
-        zxc.draw.circle(SCREEN, RGB, POS[0], TEMP_RADIUS)
+        radius = round(((POS[0][0] - POS[1][0])**2 + (POS[0][1] - POS[1][1])**2)**0.5)
+        zxc.draw.circle(SCREEN, RGB, POS[0], radius)
     
     elif FIGURE == "Rectangle":
         zxc.draw.rect(SCREEN, RGB, (min(POS[0][0], POS[1][0]), min(POS[0][1], POS[1][1]), abs(POS[0][0] - POS[1][0]), abs(POS[0][1] - POS[1][1])))
@@ -131,8 +134,8 @@ def drawFigure(SCREEN, RGB, FIGURE, POS):
         zxc.draw.polygon(SCREEN, RGB, [(x1, y1), (x2, y2), (x3, y3)])
     
     elif FIGURE == "Rhombus":
-        cx, cy = (POS[0][0] + POS[1][0]) // 2, (POS[0][1] + POS[1][1]) // 2  # Центр ромба
-        dx, dy = abs(POS[0][0] - POS[1][0]) // 2, abs(POS[0][1] - POS[1][1]) // 2  # Половины диагоналей
+        cx, cy = (POS[0][0] + POS[1][0]) // 2, (POS[0][1] + POS[1][1]) // 2
+        dx, dy = abs(POS[0][0] - POS[1][0]) // 2, abs(POS[0][1] - POS[1][1]) // 2
 
         zxc.draw.polygon(SCREEN, RGB, [(cx, cy - dy), (cx + dx, cy), (cx, cy + dy), (cx - dx, cy)])
 
