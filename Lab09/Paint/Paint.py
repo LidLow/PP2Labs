@@ -1,5 +1,5 @@
 import pygame as zxc
-import time
+import math
 
 def main():
     zxc.init()
@@ -15,6 +15,9 @@ def main():
     GEOFIGACTIVE = False
     CLICKS = 0
     POS = []
+   
+    FIGURES = ("Circle", "Rectangle", "Square", "Right triangle", "Equilateral triangle", "Rhombus")
+    FIGURE = FIGURES[0]
 
     PALETTE = {
         "Red": (255, 0, 0),
@@ -31,9 +34,8 @@ def main():
         "Brown": (139, 69, 19)
     }
 
-    MODES = ("Circle", "Rectangle")
-
-    obj = paletterSC(PALETTE)               #generator for color chageing
+    colorOBJ = paletteSC(PALETTE)               #new generator for color changeing
+    figureOBJ = figureMode(FIGURES)             #new generator for figeure changeing
     
     while True:
         for event in zxc.event.get():
@@ -55,42 +57,29 @@ def main():
                     POSITIONS.clear()           
                     RGB = (255, 255, 255)   
                 if event.key == zxc.K_r:                    #change color
-                    objTuple = next(obj)
-                    RGB = objTuple[1]
-                    COLORNAME = objTuple[0]
+                    colorTuple = next(colorOBJ)
+                    RGB = colorTuple[1]
+                    COLORNAME = colorTuple[0]
 
             pressed = zxc.key.get_pressed()
-            if pressed[zxc.K_a]: 
-                if event.type == zxc.MOUSEWHEEL:
-                    
+            if pressed[zxc.K_a]:                                 #figure drawing works when a is pressed
+                GEOFIGACTIVE = True
 
-                
-            if CIRCLEACTIVE and event.type == zxc.MOUSEBUTTONDOWN:
-                CLICKS += 1
-                POS.append(zxc.mouse.get_pos())
+                if event.type == zxc.MOUSEWHEEL:                        #figure choose mode
+                    FIGURE = next(figureOBJ)
+                if event.type == zxc.MOUSEBUTTONDOWN and event.button in [1, 3]:      #figuer draw mode
+                    CLICKS += 1
+                    POS.append(zxc.mouse.get_pos())
 
-                if CLICKS == 2:
-                    TEMP_RADIUS = round(((POS[0][0] - POS[1][0])**2 + (POS[0][1] - POS[1][1])**2)**0.5)
-                    zxc.draw.circle(screen, RGB, POS[0], TEMP_RADIUS)
+                    if CLICKS == 2:
+                        drawFigure(screen, RGB, FIGURE, POS)
 
-                    CIRCLEACTIVE = False
-                    CLICKS = 0
-                    POS.clear()
-                    POSITIONS.clear()
+                        CLICKS = 0
+                        POS.clear()
+                        POSITIONS.clear()
+            else:
+                GEOFIGACTIVE = False
 
-            if RECTACTIVE and event.type == zxc.MOUSEBUTTONDOWN:
-                CLICKS += 1
-                POS.append(zxc.mouse.get_pos())
-                print("OK")
-
-                if CLICKS == 2:
-                    zxc.draw.rect(screen, RGB, (min(POS[0][0], POS[1][0]), min(POS[0][1], POS[1][1]), abs(POS[0][0] - POS[1][0]), abs(POS[0][1] - POS[1][1])))
-
-                    RECTACTIVE = False
-                    CLICKS = 0
-                    POS.clear()
-                    POSITIONS.clear()
-                    
             if zxc.mouse.get_pressed()[0]:                  #draw while pressing lef button
                 position = zxc.mouse.get_pos()
                 POSITIONS = POSITIONS + [position]
@@ -99,22 +88,50 @@ def main():
             if event.type == zxc.MOUSEBUTTONUP:         #clear previous positions
                 POSITIONS.clear()                      
 
-
         i = 0
         while i < len(POSITIONS) - 1:
             drawLineBetween(screen, POSITIONS[i], POSITIONS[i + 1], RADIUS, RGB)
             i += 1
-        
 
-        zxc.display.set_caption(f"Width: {RADIUS * 2} | Color: {COLORNAME}")
+        zxc.display.set_caption(f"Width: {RADIUS * 2} | Color: {COLORNAME}" + (f" | Figure: {FIGURE}" if GEOFIGACTIVE else ""))
         zxc.display.flip()
         
         FPS.tick(60)
 
-def paletterSC(PALETTE):
+def paletteSC(PALETTE):
     while True:
         for key, value in PALETTE.items():
             yield (key, value) 
+
+def figureMode(MODES):
+    while True:
+        for figure in MODES:
+            yield figure
+
+def drawFigure(screen, RGB, FIGURE, POS):
+    if FIGURE == "Circle":
+        TEMP_RADIUS = round(((POS[0][0] - POS[1][0])**2 + (POS[0][1] - POS[1][1])**2)**0.5)
+        zxc.draw.circle(screen, RGB, POS[0], TEMP_RADIUS)
+    elif FIGURE == "Rectangle":
+        zxc.draw.rect(screen, RGB, (min(POS[0][0], POS[1][0]), min(POS[0][1], POS[1][1]), abs(POS[0][0] - POS[1][0]), abs(POS[0][1] - POS[1][1])))
+    elif FIGURE == "Square":
+        zxc.draw.rect(screen, RGB, (min(POS[0][0], POS[1][0]), min(POS[0][1], POS[1][1]), max(abs(POS[0][0] - POS[1][0]), abs(POS[0][1] - POS[1][1])), max(abs(POS[0][0] - POS[1][0]), abs(POS[0][1] - POS[1][1]))))
+    elif FIGURE == "Right triangle":
+        zxc.draw.polygon(screen, RGB, [(POS[0][0], POS[0][1]), (POS[1][0], POS[0][1]), (POS[0][0], POS[1][1])])
+    elif FIGURE == "Equilateral triangle":
+        side = max(abs(POS[0][0] - POS[1][0]), abs(POS[0][1] - POS[1][1]))
+        x1, y1 = POS[0] 
+        x2, y2 = x1 + side, y1
+        x3, y3 = x1 + side / 2, y1 - (math.sqrt(3) / 2) * side
+
+        zxc.draw.polygon(screen, RGB, [(x1, y1), (x2, y2), (x3, y3)])
+    elif FIGURE == "Rhombus":
+        cx, cy = (POS[0][0] + POS[1][0]) // 2, (POS[0][1] + POS[1][1]) // 2  # Центр ромба
+        dx, dy = abs(POS[0][0] - POS[1][0]) // 2, abs(POS[0][1] - POS[1][1]) // 2  # Половины диагоналей
+
+        zxc.draw.polygon(screen, RGB, [(cx, cy - dy), (cx + dx, cy), (cx, cy + dy), (cx - dx, cy)])
+
+    return 
 
 def drawLineBetween(screen, start, end, width, RGB):
     dx = start[0] - end[0]
