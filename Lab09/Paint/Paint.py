@@ -112,12 +112,16 @@ def drawFigure(screen, RGB, FIGURE, POS):
     if FIGURE == "Circle":
         TEMP_RADIUS = round(((POS[0][0] - POS[1][0])**2 + (POS[0][1] - POS[1][1])**2)**0.5)
         zxc.draw.circle(screen, RGB, POS[0], TEMP_RADIUS)
+    
     elif FIGURE == "Rectangle":
         zxc.draw.rect(screen, RGB, (min(POS[0][0], POS[1][0]), min(POS[0][1], POS[1][1]), abs(POS[0][0] - POS[1][0]), abs(POS[0][1] - POS[1][1])))
+    
     elif FIGURE == "Square":
         zxc.draw.rect(screen, RGB, (min(POS[0][0], POS[1][0]), min(POS[0][1], POS[1][1]), max(abs(POS[0][0] - POS[1][0]), abs(POS[0][1] - POS[1][1])), max(abs(POS[0][0] - POS[1][0]), abs(POS[0][1] - POS[1][1]))))
+    
     elif FIGURE == "Right triangle":
         zxc.draw.polygon(screen, RGB, [(POS[0][0], POS[0][1]), (POS[1][0], POS[0][1]), (POS[0][0], POS[1][1])])
+
     elif FIGURE == "Equilateral triangle":
         side = max(abs(POS[0][0] - POS[1][0]), abs(POS[0][1] - POS[1][1]))
         x1, y1 = POS[0] 
@@ -125,6 +129,7 @@ def drawFigure(screen, RGB, FIGURE, POS):
         x3, y3 = x1 + side / 2, y1 - (math.sqrt(3) / 2) * side
 
         zxc.draw.polygon(screen, RGB, [(x1, y1), (x2, y2), (x3, y3)])
+    
     elif FIGURE == "Rhombus":
         cx, cy = (POS[0][0] + POS[1][0]) // 2, (POS[0][1] + POS[1][1]) // 2  # Центр ромба
         dx, dy = abs(POS[0][0] - POS[1][0]) // 2, abs(POS[0][1] - POS[1][1]) // 2  # Половины диагоналей
