@@ -3,7 +3,7 @@ import math
 
 def main():
     zxc.init()
-    screen = zxc.display.set_mode((1500, 1000))
+    SCREEN = zxc.display.set_mode((1500, 1000))
     FPS = zxc.time.Clock()
 
     RGB = (255, 255, 255)
@@ -47,9 +47,9 @@ def main():
                 if event.key == zxc.K_x:
                     RADIUS += 1
 
-                if event.key == zxc.K_c:                   #clear screen
+                if event.key == zxc.K_c:                   #clear SCREEN
                     POSITIONS.clear()
-                    screen.fill((0, 0, 0))
+                    SCREEN.fill((0, 0, 0))
                 if event.key == zxc.K_e:                    #eraser mode
                     POSITIONS.clear()
                     RGB = (0, 0, 0)
@@ -72,7 +72,7 @@ def main():
                     POS.append(zxc.mouse.get_pos())
 
                     if CLICKS == 2:
-                        drawFigure(screen, RGB, FIGURE, POS)
+                        drawFigure(SCREEN, RGB, FIGURE, POS)
 
                         CLICKS = 0
                         POS.clear()
@@ -90,7 +90,7 @@ def main():
 
         i = 0
         while i < len(POSITIONS) - 1:
-            drawLineBetween(screen, POSITIONS[i], POSITIONS[i + 1], RADIUS, RGB)
+            drawLineBetween(SCREEN, POSITIONS[i], POSITIONS[i + 1], RADIUS, RGB)
             i += 1
 
         zxc.display.set_caption(f"Width: {RADIUS * 2} | Color: {COLORNAME}" + (f" | Figure: {FIGURE}" if GEOFIGACTIVE else ""))
@@ -103,24 +103,24 @@ def paletteSC(PALETTE):
         for key, value in PALETTE.items():
             yield (key, value) 
 
-def figureMode(MODES):
+def figureMode(figures):
     while True:
-        for figure in MODES:
+        for figure in figures:
             yield figure
 
-def drawFigure(screen, RGB, FIGURE, POS):
+def drawFigure(SCREEN, RGB, FIGURE, POS):
     if FIGURE == "Circle":
         TEMP_RADIUS = round(((POS[0][0] - POS[1][0])**2 + (POS[0][1] - POS[1][1])**2)**0.5)
-        zxc.draw.circle(screen, RGB, POS[0], TEMP_RADIUS)
+        zxc.draw.circle(SCREEN, RGB, POS[0], TEMP_RADIUS)
     
     elif FIGURE == "Rectangle":
-        zxc.draw.rect(screen, RGB, (min(POS[0][0], POS[1][0]), min(POS[0][1], POS[1][1]), abs(POS[0][0] - POS[1][0]), abs(POS[0][1] - POS[1][1])))
+        zxc.draw.rect(SCREEN, RGB, (min(POS[0][0], POS[1][0]), min(POS[0][1], POS[1][1]), abs(POS[0][0] - POS[1][0]), abs(POS[0][1] - POS[1][1])))
     
     elif FIGURE == "Square":
-        zxc.draw.rect(screen, RGB, (min(POS[0][0], POS[1][0]), min(POS[0][1], POS[1][1]), max(abs(POS[0][0] - POS[1][0]), abs(POS[0][1] - POS[1][1])), max(abs(POS[0][0] - POS[1][0]), abs(POS[0][1] - POS[1][1]))))
+        zxc.draw.rect(SCREEN, RGB, (min(POS[0][0], POS[1][0]), min(POS[0][1], POS[1][1]), max(abs(POS[0][0] - POS[1][0]), abs(POS[0][1] - POS[1][1])), max(abs(POS[0][0] - POS[1][0]), abs(POS[0][1] - POS[1][1]))))
     
     elif FIGURE == "Right triangle":
-        zxc.draw.polygon(screen, RGB, [(POS[0][0], POS[0][1]), (POS[1][0], POS[0][1]), (POS[0][0], POS[1][1])])
+        zxc.draw.polygon(SCREEN, RGB, [(POS[0][0], POS[0][1]), (POS[1][0], POS[0][1]), (POS[0][0], POS[1][1])])
 
     elif FIGURE == "Equilateral triangle":
         side = max(abs(POS[0][0] - POS[1][0]), abs(POS[0][1] - POS[1][1]))
@@ -128,17 +128,17 @@ def drawFigure(screen, RGB, FIGURE, POS):
         x2, y2 = x1 + side, y1
         x3, y3 = x1 + side / 2, y1 - (math.sqrt(3) / 2) * side
 
-        zxc.draw.polygon(screen, RGB, [(x1, y1), (x2, y2), (x3, y3)])
+        zxc.draw.polygon(SCREEN, RGB, [(x1, y1), (x2, y2), (x3, y3)])
     
     elif FIGURE == "Rhombus":
         cx, cy = (POS[0][0] + POS[1][0]) // 2, (POS[0][1] + POS[1][1]) // 2  # Центр ромба
         dx, dy = abs(POS[0][0] - POS[1][0]) // 2, abs(POS[0][1] - POS[1][1]) // 2  # Половины диагоналей
 
-        zxc.draw.polygon(screen, RGB, [(cx, cy - dy), (cx + dx, cy), (cx, cy + dy), (cx - dx, cy)])
+        zxc.draw.polygon(SCREEN, RGB, [(cx, cy - dy), (cx + dx, cy), (cx, cy + dy), (cx - dx, cy)])
 
     return 
 
-def drawLineBetween(screen, start, end, width, RGB):
+def drawLineBetween(SCREEN, start, end, width, RGB):
     dx = start[0] - end[0]
     dy = start[1] - end[1]
     iterations = max(abs(dx), abs(dy))
@@ -148,6 +148,6 @@ def drawLineBetween(screen, start, end, width, RGB):
         aprogress = 1 - progress
         x = int(aprogress * start[0] + progress * end[0])
         y = int(aprogress * start[1] + progress * end[1])
-        zxc.draw.circle(screen, RGB, (x, y), width)
+        zxc.draw.circle(SCREEN, RGB, (x, y), width)
 
 main()
