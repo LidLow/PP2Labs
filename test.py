@@ -14,6 +14,8 @@ points = []
 done = False
 erase = False
 
+variable = "circle"
+
 shapes = ("circle", "rectangle")
 
 def gen(shapes):
@@ -49,15 +51,15 @@ while not done:
         if event.type == pygame.QUIT:
             done = True
 
-        if event.type == pygame.KEYDOWN and event.key == pygame.K_LCTRL:
+        if event.type == pygame.KEYDOWN:
+            if event.key == pygame.K_LCTRL:
                 variable = next(Shape)
 
+            if event.key == pygame.K_v:
                 if variable == "circle":
-                    screen.fill((0,0,0))
-                    pygame.draw.circle(screen, color, (150,150), radius)
+                    pygame.draw.circle(screen, color, pygame.mouse.get_pos(), radius)
                 elif variable == "rectangle":
-                    screen.fill((0,0,0))
-                    pygame.draw.rect(screen, color, (200,200,radius,radius))          
+                    pygame.draw.rect(screen, color, pygame.mouse.get_pos(), (radius, radius))  
 
         i = 0
         while i < len(points) - 1:
