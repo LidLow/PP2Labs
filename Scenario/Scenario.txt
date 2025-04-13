@@ -1,0 +1,8 @@
+Prep Phase:
+1) Download and install python 3.
+2) Download and install PostgreSQL, set admin user name and password (by default user name: postgres)
+2) Go to ...\Users\user\AppData\Local\Programs\Python\Python###\Scripts, copy path of the 'pip.exe'.
+3) Go to the Environment variables -> User EV, add the 'pip.exe' path into 'Path' and save.
+4) Open the PowerShell as an administrator, execute "Set-ExecutionPolicy RemoteSigned". after execute "A"
+
+Setting environment:
