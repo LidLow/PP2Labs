@@ -10,6 +10,9 @@ def mainMenu():
         print("5. Delete a contact")
         print("6. Clear all contacts")
         print("7. Import a CSV")
+        print("8. Show contacts by pattern")
+        print("9. Update or insert a contact")
+        print("10. Show contacts with limit and offset")
         print("0. Exit")
 
         choice = input("Enter your choice: ")
@@ -24,8 +27,6 @@ def mainMenu():
             PREPupdateContact()
         elif choice == "5":
             PREPdeleteContact()
-        elif choice == "5":
-            PREPdeleteContact()
         elif choice == "6":
             confirm = input("Are you sure? This will DELETE ALL contacts. (yes/no): ").lower()
             if confirm == "yes":
@@ -35,6 +36,12 @@ def mainMenu():
                 print("Operation canceled.")
         elif choice == "7":
             SQL.importCSV()
+        elif choice == "8":
+            PREPshowContactsPattern()
+        elif choice == "9":
+            PREPupdateOrInsertContact()
+        elif choice == "10":
+            PREPshowContactsLimitOffset()
         elif choice == "0":
             print("Goodbye!")
             break
@@ -75,7 +82,7 @@ def PREPshowOrderedContacts():
     print("\nOrder by:\n 1) Ascending\n 2) Descending")
 
     while(True):
-        selection = input("Order by: ")
+        selection = input("Enter: ")
 
         if selection == "1":
             order = "ASC"
@@ -89,8 +96,23 @@ def PREPshowOrderedContacts():
     SQL.showOrderedContacts(key, order)
 
 def PREPdeleteContact():
-    name = input("First name or last name: ")
+    name = input("First name or last name or phone number: ")
     SQL.deleteContact(name)
+
+def PREPshowContactsPattern():
+    pattern = input("Enter pattern to search: ")
+    SQL.showContactsPattern(pattern)
+
+def PREPupdateOrInsertContact():
+    first_name = input("First name: ")
+    last_name = input("Last name: ")
+    phone_number = input("Phone number: ")
+    SQL.updateOrInsertContact(first_name, last_name, phone_number)
+
+def PREPshowContactsLimitOffset():
+    limit = input("Enter the limit of contacts to show: ")
+    offset = input("Enter the offset of contacts to show: ")
+    SQL.showContactsLimitOffset(limit, offset)
 
 if __name__ == "__main__":
     mainMenu()

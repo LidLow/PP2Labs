@@ -84,8 +84,6 @@ def importCSV():
         for row in reader:
             createContact(row[0], row[1], row[2])
 
-
-
 def deleteContact(pattern):
     SQL = "DELETE FROM contacts WHERE first_name=%s or last_name=%s or phone_number=%s;"
 
@@ -96,17 +94,40 @@ def deleteContact(pattern):
     except (Exception, psycopg2.DatabaseError) as Error:
         print(Error)
 
-
 def showContactsPattern(pattern):
     pattern = f"%{pattern}%"
-    SQL = f"SELECT * FROM contacts WHERE first_name ILIKE %{pattern}% OR last_name ILIKE %{pattern}% OR phone_number ILIKE %{pattern}%"
+    SQL = " SELECT * FROM contacts WHERE first_name ILIKE %s OR last_name ILIKE %s OR phone_number ILIKE %s;"
 
     try:
         with psycopg2.connect(**config) as conn, conn.cursor() as curs:
             curs.execute(SQL, (pattern, pattern, pattern))
+
             row = curs.fetchone()
             while row is not None:
                 print(row)
                 row = curs.fetchone()
     except (Exception, psycopg2.DatabaseError) as error:
         print(error)
+
+def updateOrInsertContact(first_name, last_name, phone_number):
+    try:
+        with psycopg2.connect(**config) as conn, conn.cursor() as curs:
+            curs.execute('CALL updateOrInsert(%s,%s,%s)', (first_name, last_name, phone_number))
+            conn.commit()
+    except (Exception, psycopg2.DatabaseError) as error:
+        print(error)
+
+def showContactsLimitOffset(limit, offset):
+    try:
+        with psycopg2.connect(**config) as conn, conn.cursor() as curs:
+            curs.callproc('showContactsLimitOffset', (limit, offset))
+
+            row = curs.fetchone()
+            while row is not None:
+                print(row)
+                row = curs.fetchone()
+    except (Exception, psycopg2.DatabaseError) as error:
+        print(error)
+
+if __name__ == "__main__":
+    pass
